@@ -1,5 +1,6 @@
 # Dotfiles Setup Guide
 
+![Screenshot](image.png)
 This repository contains configuration files for Hyprland and related tools.
 
 ## Requirements
