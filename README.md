@@ -45,6 +45,30 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-th
 
 ---
 
+## Running Steam Games on an NTFS Partition
+If you want to store Steam games on an NTFS partition in Linux, follow these steps carefully. NTFS is not fully Linux-native, so extra precautions are needed to avoid game launch issues.
+
+1. Edit /etc/fstab to mount the NTFS partition with proper permissions. Open the file:
+sudo nano /etc/fstab
+Add this line (replace the UUID with your drive’s UUID):
+UUID=266EA8206EA7E731  /E  ntfs-3g  uid=1000,gid=1000,rw,user,exec,umask=000 0 0
+Then mount it:
+sudo mount -a
+
+2. Set ownership for your user (replace bruno with your username):
+sudo chown -R bruno:bruno /E
+
+3. Move the Proton compatibility data to a Linux-native filesystem (to handle symlinks and permissions properly):
+mkdir -p /home/bruno/SteamCompatData
+mv /E/SteamLibrary/steamapps/compatdata /home/bruno/SteamCompatData/
+ln -s /home/bruno/SteamCompatData /E/SteamLibrary/steamapps/compatdata
+
+4. Run Steam normally. Your games will now launch from the NTFS partition, while Proton stores compatibility data safely on your Linux filesystem.
+
+⚠️ Note: NTFS is not fully supported for Linux game libraries. Some games may still encounter issues. For best stability, use a Linux-native filesystem (ext4, btrfs) if possible.
+
+---
+
 **PS:** Don’t forget to keep your system updated:
 
 ```bash
