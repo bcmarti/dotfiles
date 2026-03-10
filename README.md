@@ -15,6 +15,7 @@ sudo pacman -S hyprpaper
 sudo pacman -S waybar
 sudo pacman -S grimblast-git
 sudo pacman -S fastfetch
+yay -S wlogout
 ```
 
 Walker and Elephant tools:
