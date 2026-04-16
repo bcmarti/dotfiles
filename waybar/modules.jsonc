@@ -1,8 +1,8 @@
 {
   // Launcher
   "custom/launcher": {
-    "format": "",
-    "on-click": "walker",
+    "format": "⏻",
+    "on-click": "wlogout",
     "tooltip": false
   },
 
@@ -50,6 +50,15 @@
     "on-click-right": "playerctl next",
     "on-click-left": "playerctl previous"
   },
+
+  "custom/spotify": {
+		  "format": "  {}",
+		  "interval": 1,
+		  "exec": "~/.config/waybar/scripts/spotify.sh",
+      "on-click-middle": "playerctl play-pause",
+      "on-click-right": "playerctl next",
+      "on-click-left": "playerctl previous"
+		},
 
   // Memory / CPU / Temp
   "memory": {
@@ -144,7 +153,7 @@
     "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
-    "on-click": "nm-connection-editor",
+    "on-click": "nmtui",
     "on-click-right": "nm-connection-editor"
   },
 
