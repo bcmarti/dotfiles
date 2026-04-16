@@ -1,5 +1,603 @@
 /* =============================================================================
 *
+* Waybar configuration
+*
+* Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+*
+* =========================================================================== */
+
+/* -----------------------------------------------------------------------------
+* Base styles
+* -------------------------------------------------------------------------- */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: JetBrainsMono Nerd Font, 'Hack Nerd Font', 'UbuntuMono', monospace;
+    font-size: 8px;
+    min-height: 0px;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.5;
+}
+
+/* -----------------------------------------------------------------------------
+* Tooltips
+* -------------------------------------------------------------------------- */
+
+#tooltip {
+    background-color: #181818;
+    color: #ffffff;
+    border: solid 1px #484a4a;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+/* -----------------------------------------------------------------------------
+* Workspaces
+* -------------------------------------------------------------------------- */
+
+#workspaces {
+    padding: 2px 4px;
+    margin: 3px 8px;
+}
+
+#workspaces button {
+    padding: 0px 10px;
+    margin: 0 2px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+    font-weight: bold;
+}
+
+#workspaces button:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+    border-radius: 20px 5px 20px 5px;
+    background: #2a4a3a;
+    border-color: #7a9a8a;
+    color: #ffffff;
+}
+
+#workspaces button.empty {
+    opacity: 0.35;
+}
+
+#workspaces button.urgent {
+    border-color: #eb4034;
+    background: #2a0f0f;
+    color: #eb4034;
+}
+
+/* -----------------------------------------------------------------------------
+* Window title
+* -------------------------------------------------------------------------- */
+
+#window {
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#window:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+/* -----------------------------------------------------------------------------
+* Clock
+* -------------------------------------------------------------------------- */
+
+#clock {
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 5px 5px 20px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#clock:hover {
+    border-radius: 20px 20px 5px 5px;
+    background: #484a4a;
+}
+
+/* -----------------------------------------------------------------------------
+* System monitoring — grouped as a pill trio: [mem][cpu][temp]
+* -------------------------------------------------------------------------- */
+
+#memory {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 5px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    border-right: none;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#memory:hover {
+    border-radius: 5px 20px 20px 5px;
+    background: #484a4a;
+}
+
+#cpu {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 0;
+    border: solid 3px;
+    border-color: #484a4a;
+    border-left: none;
+    border-right: none;
+    transition: background 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#cpu:hover {
+    background: #484a4a;
+}
+
+#temperature {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 20px 5px;
+    border: solid 3px;
+    border-color: #484a4a;
+    border-left: none;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#temperature:hover {
+    border-radius: 20px 5px 5px 20px;
+    background: #484a4a;
+}
+
+#temperature.critical {
+    color: #ff4444;
+    border-color: #eb4034;
+    background: #2a0f0f;
+}
+
+/* -----------------------------------------------------------------------------
+* Battery
+* -------------------------------------------------------------------------- */
+
+#battery {
+    margin-right: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 5px 20px 5px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#battery:hover {
+    border-radius: 5px 20px 5px 20px;
+    background: #484a4a;
+}
+
+#battery.charging {
+    color: #ffffff;
+    padding-right: 9px;
+    padding-left: 9px;
+    background-color: #0f1c17;
+    border: solid 3px;
+    border-color: #484a4a;
+}
+
+#battery.warning:not(.charging) {
+    background-color: #0f1c17;
+    color: #ffaa00;
+    border-color: #ffaa00;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #0f1c17;
+    color: #ffffff;
+    border-color: #ad2626;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* -----------------------------------------------------------------------------
+* Audio and Backlight — grouped as a pill pair: [backlight][pulseaudio]
+* -------------------------------------------------------------------------- */
+
+#backlight {
+    margin-left: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 5px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    border-right: none;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#backlight:hover {
+    border-radius: 5px 20px 20px 5px;
+    background: #484a4a;
+}
+
+#pulseaudio {
+    margin-right: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 5px 20px 5px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#pulseaudio:hover {
+    border-radius: 5px 20px 5px 20px;
+    background: #484a4a;
+}
+
+#pulseaudio.muted {
+    color: #888888;
+    border-color: #333333;
+}
+
+/* -----------------------------------------------------------------------------
+* Network
+* -------------------------------------------------------------------------- */
+
+#network {
+    margin-right: 8px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 20px 5px 20px 5px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#network:hover {
+    border-radius: 5px 20px 5px 20px;
+    background: #484a4a;
+}
+
+#network.disconnected {
+    color: #ff4444;
+    border-color: #ad2626;
+}
+
+#network.disabled {
+    color: #888888;
+    border-color: #333333;
+}
+
+/* -----------------------------------------------------------------------------
+* Language & Keyboard — grouped as a pill pair: [language][keyboard-state]
+* -------------------------------------------------------------------------- */
+
+#language {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    border-right: none;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#language:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#keyboard-state {
+    margin-right: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 5px 20px 5px;
+    border: solid 3px;
+    border-color: #484a4a;
+    border-left: none;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#keyboard-state:hover {
+    border-radius: 5px 20px 5px 20px;
+    background: #484a4a;
+}
+
+/* -----------------------------------------------------------------------------
+* Custom modules
+* -------------------------------------------------------------------------- */
+
+#custom-launcher {
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #5a3a7a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #1c0f2a;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-right: 4px;
+}
+
+#custom-launcher:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #5a3a7a;
+}
+
+#custom-updates {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-updates:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#custom-updates.has-updates {
+    color: #ffaa00;
+    border-color: #ffaa00;
+    background: #1c1500;
+}
+
+#custom-spotify {
+    margin-left: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease-in-out,
+        border-radius 0.3s ease-in-out;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-spotify:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#custom-weather {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-weather:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#custom-vpn {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-vpn:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#custom-vpn.connected {
+    border-color: #2a7a4a;
+    color: #aaffcc;
+}
+
+#custom-notification {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-notification:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#custom-cava {
+    margin-left: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-cava:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#custom-recorder {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 20px 20px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#custom-recorder.recording {
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* -----------------------------------------------------------------------------
+* Tray
+* -------------------------------------------------------------------------- */
+
+#tray {
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-right: 8px;
+    border-radius: 20px 10px 10px 5px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#tray:hover {
+    border-radius: 5px 20px 5px 20px;
+    background: #484a4a;
+}
+
+#tray > .passive {
+    opacity: 0.7;
+}
+
+#tray > .needs-attention {
+    background-color: #2a0f0f;
+    border-radius: 6px;
+    color: #eb4034;
+}
+
+/* -----------------------------------------------------------------------------
+* Idle inhibitor
+* -------------------------------------------------------------------------- */
+
+#idle_inhibitor {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #484a4a;
+    transition: background 0.3s ease,
+        border-radius 0.3s ease;
+    color: #ffffff;
+    background: #0f1c17;
+}
+
+#idle_inhibitor:hover {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+}
+
+#idle_inhibitor.activated {
+    border-radius: 20px 5px 20px 5px;
+    background: #484a4a;
+    border-color: #888888;
+}
+
+/* -----------------------------------------------------------------------------
+* Mode indicator
+* -------------------------------------------------------------------------- */
+
+#mode {
+    padding: 6px 16px;
+    margin: 3px 8px;
+    border-radius: 5px 20px 5px 20px;
+    border: solid 3px;
+    border-color: #ffaa00;
+    color: #ffaa00;
+    background: #1c1500;
+    font-weight: bold;
+}
+
+/* -----------------------------------------------------------------------------
+* Animations
+* -------------------------------------------------------------------------- */
+
+@keyframes blink {
+    to {
+        background-color: #eb4034;
+        color: #484a4a;
+    }
+}/* =============================================================================
+*
 * Waybar configuration - Modern Style (Simplified)
 *
 * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
